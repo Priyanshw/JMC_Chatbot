@@ -6,6 +6,11 @@ app.use(bodyParser.json());
 
 const PORT = process.env.PORT || 3000;
 
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
+
 app.post("/", (req, res) => {
     const incomingMsg = req.body.payload.payload.text.toLowerCase();
     let reply = "";
