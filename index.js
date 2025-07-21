@@ -2,10 +2,17 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const app = express();
+const PORT = process.env.PORT || 10000;
+
+// Middleware to parse JSON
 app.use(bodyParser.json());
 
-const PORT = process.env.PORT || 3000;
+// ✅ Health check route
+app.get("/", (req, res) => {
+    res.send("✅ JMC WhatsApp Bot is Running");
+});
 
+// ✅ Webhook POST route
 app.post("/", (req, res) => {
     const incomingMsg = req.body.payload?.payload?.text?.toLowerCase() || "";
     let reply = "";
@@ -36,12 +43,7 @@ Reply with:
     });
 });
 
-// Health check route
-app.get("/", (req, res) => {
-    res.send("✅ JMC WhatsApp Bot is Running");
-});
-
-// ✅ Only ONE app.listen
+// ✅ Start server only once
 app.listen(PORT, () => {
     console.log(`✅ Server is running on port ${PORT}`);
 });
