@@ -6,13 +6,8 @@ app.use(bodyParser.json());
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
-
-
 app.post("/", (req, res) => {
-    const incomingMsg = req.body.payload.payload.text.toLowerCase();
+    const incomingMsg = req.body.payload?.payload?.text?.toLowerCase() || "";
     let reply = "";
 
     if (incomingMsg.includes("1")) {
@@ -37,14 +32,16 @@ Reply with:
     }
 
     res.json({
-        "response": reply
+        response: reply
     });
 });
 
+// Health check route
 app.get("/", (req, res) => {
     res.send("✅ JMC WhatsApp Bot is Running");
 });
 
+// ✅ Only ONE app.listen
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`✅ Server is running on port ${PORT}`);
 });
